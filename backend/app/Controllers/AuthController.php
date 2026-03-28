@@ -93,7 +93,7 @@ class AuthController extends ResourceController
             return $this->fail('Invalid password');
         }
 
-        $secret = getenv('JWT_SECRET_KEY') ?: 'teachportal_secret_key_change_in_production';
+        $secret = getenv('JWT_SECRET_KEY') ?: 'teachportal_secret_key_2026';
 
         $payload = [
             'iss'     => 'teachportal',
