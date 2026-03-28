@@ -1,8 +1,8 @@
-# 📘 TeachPortal — Full Setup Guide
+# TeachPortal — Full Setup Guide
 
 This document explains how to set up the **Frontend**, **Backend**, and **Database** step-by-step, including how to verify everything is working.
 
-# 🚀 1. FRONTEND SETUP (React)
+# 1. FRONTEND SETUP (React)
 
 ## Step 1:
 cd frontend
