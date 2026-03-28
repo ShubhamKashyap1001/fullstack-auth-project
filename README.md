@@ -1,139 +1,100 @@
-# TeachPortal — Full Stack Auth Project
+# 📘 TeachPortal — Full Setup Guide
 
-A CodeIgniter 4 + ReactJS application with JWT-based authentication and teacher management.
+This document explains how to set up the **Frontend**, **Backend**, and **Database** step-by-step, including how to verify everything is working.
 
----
+# 🚀 1. FRONTEND SETUP (React)
 
-## Project Structure
+## Step 1:
+cd frontend
 
-```
-fullstack-auth-project/
-├── backend/        CodeIgniter 4 REST API
-├── frontend/       ReactJS application
-└── database/       SQL dump files
-```
+## Step 2: Install Dependencies
+npm install
 
----
+## Step 3: Setup Environment Variables
+REACT_APP_API_BASE_URL=http://localhost:8080/api
 
-## Backend Setup (CodeIgniter 4)
+## Step 4: Run Frontend
 
-### Prerequisites
-- PHP 8.1+
-- Composer
-- MySQL or PostgreSQL
+npm start
+http://localhost:3000
 
-### Steps
+## Step 5: Verify Frontend
 
-```bash
+* Open browser → `http://localhost:3000`
+* Try:
+
+  * Register
+  * Login
+  * Dashboard
+
+# 2. BACKEND SETUP (CodeIgniter 4)
+
+## Step 1: Go to Backend Folder
 cd backend
+
+## Step 2: Install Dependencies
+
 composer install
-cp .env.example .env
-```
 
-Edit `.env` with your database credentials:
+## Step 3: Setup `.env`
+CI_ENVIRONMENT = development
 
-**MySQL:**
-```
-database.default.DBDriver = MySQLi
+app.baseURL = 'http://localhost:8080/'
+
 database.default.hostname = localhost
 database.default.database = teacher_db
 database.default.username = root
-database.default.password = your_password
-database.default.port     = 3306
-JWT_SECRET_KEY            = any_long_random_string
-```
+database.default.password =
+database.default.DBDriver = MySQLi
 
-**PostgreSQL:**
-```
-database.default.DBDriver = Postgre
-database.default.hostname = localhost
-database.default.database = teacher_db
-database.default.username = postgres
-database.default.password = your_password
-database.default.port     = 5432
-JWT_SECRET_KEY            = any_long_random_string
-```
+JWT_SECRET = your_secret_key
 
-### Option A — Migrations (recommended)
-
-```bash
-php spark migrate
+## Step 4: Run Backend
 php spark serve
-```
 
-### Option B — Import SQL dump
 
-**MySQL:**
-```bash
-mysql -u root -p teacher_db < ../database/teacher_db_mysql.sql
-php spark serve
-```
+## Backend runs on:
+http://localhost:8080
 
-**PostgreSQL:**
-```bash
-psql -U postgres -d teacher_db -f ../database/teacher_db_postgres.sql
-php spark serve
-```
+## Step 5: Test API
+Open browser:
+http://localhost:8080/api/teachers
 
-API runs at: `http://localhost:8080`
 
-> Sample seed passwords are all `password123`
+# 3. DATABASE SETUP (MySQL)
 
----
+## Step 1: Open MySQL
 
-## Frontend Setup (ReactJS)
+mysql -u root -p
 
-### Prerequisites
-- Node.js 16+
-- npm
+## Step 2: Create Database
+CREATE DATABASE teacher_db;
+USE teacher_db;
 
-### Steps
+# DATABASE CHECK COMMANDS 
 
-```bash
-cd frontend
-npm install
-npm start
-```
+## Check database
+SHOW DATABASES;
 
-App runs at: `http://localhost:3000`
+## Use database
+USE teacher_db;
 
----
+## Show tables
+SHOW TABLES;
 
-## API Endpoints
+## View users
+SELECT * FROM auth_user;
 
-| Method | Endpoint        | Auth     | Description              |
-|--------|----------------|----------|--------------------------|
-| POST   | /api/register  | Public   | Register user + teacher  |
-| POST   | /api/login     | Public   | Login and get token      |
-| GET    | /api/users     | JWT      | List all users           |
-| GET    | /api/teachers  | JWT      | List all teachers        |
-| POST   | /api/teacher   | JWT      | Create teacher + user    |
+## View teachers
+SELECT * FROM teachers;
 
----
+## Join
+SELECT 
+u.first_name,
+u.last_name,
+u.email,
+t.university_name,
+t.subject
+FROM teachers t
+JOIN auth_user u ON u.id = t.user_id;
 
-## Database Schema
-
-### auth_user
-| Column     | Type         |
-|------------|--------------|
-| id         | INT PK AI    |
-| email      | VARCHAR(191) |
-| first_name | VARCHAR(100) |
-| last_name  | VARCHAR(100) |
-| password   | VARCHAR(255) |
-| phone      | VARCHAR(20)  |
-| created_at | DATETIME     |
-| updated_at | DATETIME     |
-
-### teachers
-| Column          | Type         |
-|-----------------|--------------|
-| id              | INT PK AI    |
-| user_id         | INT FK       |
-| university_name | VARCHAR(255) |
-| gender          | ENUM         |
-| year_joined     | SMALLINT     |
-| subject         | VARCHAR(150) |
-| bio             | TEXT         |
-| created_at      | DATETIME     |
-| updated_at      | DATETIME     |
