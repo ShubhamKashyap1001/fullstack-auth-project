@@ -86,7 +86,7 @@ database.default.password = YOUR_ACTUAL_PASSWORD
 database.default.DBDriver = MySQLi
 database.default.port     = 3306
 
-JWT_SECRET_KEY = teachportal_secret_key_2026
+JWT_SECRET_KEY=teachportal_secret_key_2026_super_secure_random_key_12345
 ```
 
 If your MySQL has NO password, leave password empty:
